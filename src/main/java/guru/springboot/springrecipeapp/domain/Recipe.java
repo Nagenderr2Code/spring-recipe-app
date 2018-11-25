@@ -18,6 +18,12 @@ public class Recipe {
     private String url;
     private String directions;
 
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
+
     @Enumerated(value = EnumType.STRING)
     private Difficulity difficulity;
 
@@ -123,5 +129,13 @@ public class Recipe {
 
     public void setDifficulity(Difficulity difficulity) {
         this.difficulity = difficulity;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
