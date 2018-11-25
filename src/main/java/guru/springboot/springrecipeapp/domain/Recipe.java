@@ -17,12 +17,20 @@ public class Recipe {
     private String directions;
 
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "recipe")
-    private Set<Ingredent> ingredents;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredents;
 
     @Lob
     private Byte[] image;
     private Notes notes;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -80,6 +88,14 @@ public class Recipe {
         this.directions = directions;
     }
 
+    public Set<Ingredient> getIngredents() {
+        return ingredents;
+    }
+
+    public void setIngredents(Set<Ingredient> ingredents) {
+        this.ingredents = ingredents;
+    }
+
     public Byte[] getImage() {
         return image;
     }
@@ -94,21 +110,5 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Set<Ingredent> getIngredents() {
-        return ingredents;
-    }
-
-    public void setIngredents(Set<Ingredent> ingredents) {
-        this.ingredents = ingredents;
     }
 }
