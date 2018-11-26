@@ -5,6 +5,7 @@ import guru.springboot.springrecipeapp.enums.Difficulity;
 import javax.persistence.*;
 import java.util.Set;
 
+@Entity
 public class Recipe {
 
     @Id
@@ -28,11 +29,13 @@ public class Recipe {
     private Difficulity difficulity;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Ingredient> ingredents;
 
     @Lob
     private Byte[] image;
+
+    @OneToOne
     private Notes notes;
 
     public Long getId() {

@@ -1,7 +1,5 @@
 package guru.springboot.springrecipeapp.domain;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
 import javax.persistence.*;
 
 @Entity
