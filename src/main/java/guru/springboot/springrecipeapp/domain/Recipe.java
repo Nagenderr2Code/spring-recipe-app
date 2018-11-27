@@ -3,6 +3,7 @@ package guru.springboot.springrecipeapp.domain;
 import guru.springboot.springrecipeapp.enums.Difficulity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,8 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @ManyToMany
@@ -29,13 +32,13 @@ public class Recipe {
     private Difficulity difficulity;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Ingredient> ingredents;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
 
     @Lob
     private Byte[] image;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
     public Long getId() {
@@ -102,12 +105,18 @@ public class Recipe {
         this.directions = directions;
     }
 
-    public Set<Ingredient> getIngredents() {
-        return ingredents;
+    public Set<Ingredient> getIngredients() {
+
+        if (this.ingredients == null) {
+            return this.ingredients = new HashSet<Ingredient>();
+        } else {
+            return ingredients;
+        }
+
     }
 
-    public void setIngredents(Set<Ingredient> ingredents) {
-        this.ingredents = ingredents;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public Byte[] getImage() {
@@ -135,7 +144,11 @@ public class Recipe {
     }
 
     public Set<Category> getCategories() {
-        return categories;
+        if (this.categories == null) {
+            return this.categories = new HashSet<Category>();
+        } else {
+            return categories;
+        }
     }
 
     public void setCategories(Set<Category> categories) {
