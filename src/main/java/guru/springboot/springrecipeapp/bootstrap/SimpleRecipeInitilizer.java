@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class SimpleRecipeInitilizer implements ApplicationListener<ContextRefres
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("In Application Event method");
         recipeRepository.saveAll(getRecipes());
@@ -212,7 +214,7 @@ public class SimpleRecipeInitilizer implements ApplicationListener<ContextRefres
 
         recipes.add(tacosRecipe);
 
-        log.info("Returning Recipes :" + recipes.toString());
+        //log.info("Returning Recipes :" + recipes.toString());
         return recipes;
     }
 }
