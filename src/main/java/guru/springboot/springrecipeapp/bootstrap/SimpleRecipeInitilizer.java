@@ -5,6 +5,7 @@ import guru.springboot.springrecipeapp.enums.Difficulity;
 import guru.springboot.springrecipeapp.repositories.CategoryRepository;
 import guru.springboot.springrecipeapp.repositories.RecipeRepository;
 import guru.springboot.springrecipeapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class SimpleRecipeInitilizer implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
@@ -29,47 +31,55 @@ public class SimpleRecipeInitilizer implements ApplicationListener<ContextRefres
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        log.info("In Application Event method");
         recipeRepository.saveAll(getRecipes());
     }
 
     private List<Recipe> getRecipes() {
 
+        log.info("In getRecipes() method..");
         List<Recipe> recipes = new ArrayList<>(2);
 
         //get UOMs
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
 
         if (!eachUomOptional.isPresent()) {
+            log.error("Expected UOM Not Found..eachUomOptional");
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> tableSpoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
         if (!tableSpoonUomOptional.isPresent()) {
+            log.error("Expected UOM Not Found..tableSpoonUomOptional");
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> teaSpoonUomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
 
         if (!teaSpoonUomOptional.isPresent()) {
+            log.error("Expected UOM Not Found..teaSpoonUomOptional");
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> dashUomOptional = unitOfMeasureRepository.findByDescription("Dash");
 
         if (!dashUomOptional.isPresent()) {
+            log.error("Expected UOM Not Found..dashUomOptional");
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> pintUomOptional = unitOfMeasureRepository.findByDescription("Pint");
 
         if (!pintUomOptional.isPresent()) {
+            log.error("Expected UOM Not Found..pintUomOptional");
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> cupsUomOptional = unitOfMeasureRepository.findByDescription("Cup");
 
         if (!cupsUomOptional.isPresent()) {
+            log.error("Expected UOM Not Found..cupsUomOptional");
             throw new RuntimeException("Expected UOM Not Found");
         }
 
@@ -85,12 +95,14 @@ public class SimpleRecipeInitilizer implements ApplicationListener<ContextRefres
         Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
 
         if (!americanCategoryOptional.isPresent()) {
+            log.error("Expected Category Not Found..americanCategoryOptional");
             throw new RuntimeException("Expected Category Not Found");
         }
 
         Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
 
         if (!mexicanCategoryOptional.isPresent()) {
+            log.error("Expected Category Not Found..mexicanCategoryOptional");
             throw new RuntimeException("Expected Category Not Found");
         }
 
@@ -199,6 +211,8 @@ public class SimpleRecipeInitilizer implements ApplicationListener<ContextRefres
         tacosRecipe.getCategories().add(mexicanCategory);
 
         recipes.add(tacosRecipe);
+
+        log.info("Returning Recipes :" + recipes.toString());
         return recipes;
     }
 }
