@@ -12,6 +12,9 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(exclude = {"recipe"})
 public class Ingredient {
 
+    public Ingredient() {
+    }
+
     public Ingredient(String description, BigDecimal quantity, UnitOfMeasure uom, Recipe recipe) {
         this.description = description;
         this.quantity = quantity;

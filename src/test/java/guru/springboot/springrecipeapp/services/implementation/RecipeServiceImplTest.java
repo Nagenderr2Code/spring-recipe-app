@@ -9,10 +9,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 public class RecipeServiceImplTest {
 
@@ -20,24 +22,41 @@ public class RecipeServiceImplTest {
     private RecipeRepository recipeRepository;
 
     private RecipeService recipeService;
+    private final Long id= 1L;
+    HashSet recipeSet = new HashSet();
+    Recipe recipe;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         recipeService = new RecipeServiceImpl(recipeRepository);
+
+        recipe = new Recipe();
+        recipe.setId(id);
+        recipeSet.add(recipe);
     }
 
     @Test
     public void findAll() {
-        Recipe recipe = new Recipe();
-        HashSet recipeSet = new HashSet();
-        recipeSet.add(recipe);
 
-
-        when(recipeService.findAll()).thenReturn(recipeSet);
+        when(recipeRepository.findAll()).thenReturn(recipeSet);
 
         Set<Recipe> recipes = recipeService.findAll();
 
+        verify(recipeRepository, times(1)).findAll();
+
         assertEquals(recipes.size(), 1);
+    }
+
+    @Test
+    public void findById(){
+
+        when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));
+
+        Recipe recipe = recipeService.findById(id);
+
+        verify(recipeRepository, times(1)).findById(anyLong());
+
+        assertEquals(id, recipe.getId());
     }
 }
