@@ -4,7 +4,6 @@ import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Recipe;
 import guru.springboot.springrecipeapp.repositories.RecipeRepository;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,11 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
 
-    @Autowired
     ConversionService conversionService;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, ConversionService conversionService) {
         this.recipeRepository = recipeRepository;
+        this.conversionService = conversionService;
     }
 
     @Override
