@@ -14,12 +14,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
 @Slf4j
 public class RecipeConverter implements GenericConverter {
+
 
     ConversionService conversionService;
 
@@ -67,13 +70,13 @@ public class RecipeConverter implements GenericConverter {
 
         recipe.setId(recipeCommand.getId());
         recipe.setDescription(recipeCommand.getDescription());
-        if(recipe.getDifficulity() != null) {
+        if (recipe.getDifficulity() != null) {
             recipe.setDifficulity(conversionService.convert(recipe.getDifficulity(), Difficulity.class));
         }
         recipe.setCookTime(recipeCommand.getCookTime());
         recipe.setDirections(recipeCommand.getDirections());
 
-        if(recipeCommand.getNotes() != null) {
+        if (recipeCommand.getNotes() != null) {
             recipe.setNotes(conversionService.convert(recipeCommand.getNotes(), Notes.class));
         }
 
@@ -109,19 +112,19 @@ public class RecipeConverter implements GenericConverter {
             recipeCommand.setId(recipe.getId());
             recipeCommand.setDescription(recipe.getDescription());
 
-            if(recipe.getDifficulity() != null) {
+            if (recipe.getDifficulity() != null) {
                 recipeCommand.setDifficulity(conversionService.convert(recipe.getDifficulity(), Difficulity.class));
             }
             recipeCommand.setCookTime(recipe.getCookTime());
             recipeCommand.setDirections(recipe.getDirections());
 
-            if(recipe.getNotes() != null) {
+            if (recipe.getNotes() != null) {
                 recipeCommand.setNotes(conversionService.convert(recipe.getNotes(), NotesCommand.class));
             }
 
             Set<CategoryCommand> categorieCommands = new HashSet<>();
 
-            if(recipeCommand.getCategories() != null && !recipeCommand.getCategories().isEmpty()) {
+            if (recipeCommand.getCategories() != null && !recipeCommand.getCategories().isEmpty()) {
                 recipeCommand.getCategories().forEach(category -> {
                     categorieCommands.add(conversionService.convert(category, CategoryCommand.class));
                 });
@@ -133,7 +136,7 @@ public class RecipeConverter implements GenericConverter {
             recipeCommand.setServings(recipe.getServings());
 
             Set<IngredientCommand> ingredientCommands = new HashSet<>();
-            if(recipeCommand.getIngredients() != null) {
+            if (recipeCommand.getIngredients() != null) {
                 recipeCommand.getIngredients().forEach(ingredient -> {
                     ingredientCommands.add(conversionService.convert(ingredient, IngredientCommand.class));
                 });

@@ -2,18 +2,20 @@ package guru.springboot.springrecipeapp.converter;
 
 import com.google.common.collect.ImmutableSet;
 import guru.springboot.springrecipeapp.commands.NotesCommand;
-import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Notes;
-import guru.springboot.springrecipeapp.domain.Recipe;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+
+@Component
 @Slf4j
 public class NotesConverter implements GenericConverter {
+
 
     ConversionService conversionService;
 
@@ -35,40 +37,42 @@ public class NotesConverter implements GenericConverter {
     }
 
     @Override
-    public Object convert(Object source, TypeDescriptor typeDescriptor, TypeDescriptor typeDescriptor1) {
+    public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
 
         if (source == null) {
             throw new RuntimeException("Source Object Can not be null..");
         }
-
+        log.info("Source Type For Conversion.." + sourceType.getObjectType().getName());
+        log.info("Target Type For Conversion.." + targetType.getObjectType().getName());
         if (source instanceof Notes) {
             log.info("Converting from Notes to NotesCommand..");
             Notes notes = (Notes) source;
-            return convertToNotesCommand(notes);
+            return convertToNotesCommand(notes, targetType);
         } else if (source instanceof NotesCommand) {
             log.info("Converting from NotesCommand to Notes..");
             NotesCommand notesCommand = (NotesCommand) source;
-            return convertToNotes(notesCommand);
+            return convertToNotes(notesCommand, targetType);
         } else {
             throw new IllegalArgumentException("Conversion Service only supports these Types." +
                     Notes.class.getName() + " || " + NotesCommand.class.getName());
         }
     }
 
-    private NotesCommand convertToNotesCommand(Notes notes) {
-        final NotesCommand notesCommand = new NotesCommand();
+    private NotesCommand convertToNotesCommand(Notes notes, TypeDescriptor targetType) {
+
+        NotesCommand notesCommand= new NotesCommand();
 
         notesCommand.setId(notes.getId());
-        notesCommand.setRecipe(conversionService.convert(notes.getRecipe(), RecipeCommand.class));
+        //notesCommand.setRecipe(conversionService.convert(notes.getRecipe(), RecipeCommand.class));
         notesCommand.setRecipeNotes(notes.getRecipeNotes());
         return notesCommand;
     }
 
-    private Notes convertToNotes(NotesCommand notesCommand) {
+    private Notes convertToNotes(NotesCommand notesCommand, TypeDescriptor targetType) {
         final Notes notes = new Notes();
 
         notes.setId(notesCommand.getId());
-        notes.setRecipe(conversionService.convert(notesCommand.getRecipe(), Recipe.class));
+       // notes.setRecipe(conversionService.convert(notesCommand.getRecipe(), Recipe.class));
         notes.setRecipeNotes(notesCommand.getRecipeNotes());
         return notes;
     }

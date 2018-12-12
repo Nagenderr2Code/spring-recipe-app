@@ -10,8 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 public class NotesConverterTest {
 
     @Autowired
-    ConversionService conversionService;
+    DefaultConversionService conversionService;
 
     NotesConverter notesConverter;
 

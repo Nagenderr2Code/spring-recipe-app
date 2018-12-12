@@ -2,20 +2,22 @@ package guru.springboot.springrecipeapp.converter;
 
 import com.google.common.collect.ImmutableSet;
 import guru.springboot.springrecipeapp.commands.IngredientCommand;
-import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.commands.UnitOfMeasureCommand;
 import guru.springboot.springrecipeapp.domain.Ingredient;
-import guru.springboot.springrecipeapp.domain.Recipe;
 import guru.springboot.springrecipeapp.domain.UnitOfMeasure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+
+@Component
 @Slf4j
 public class IngredientConverter implements GenericConverter {
+
 
     ConversionService conversionService;
 
@@ -68,9 +70,10 @@ public class IngredientConverter implements GenericConverter {
             ingredientCommand.setUom(conversionService.convert(ingredient.getUom(), UnitOfMeasureCommand.class));
         }
 
-        if (ingredient.getRecipe() != null) {
-            ingredientCommand.setRecipe(conversionService.convert(ingredient.getRecipe(), RecipeCommand.class));
-        }
+        /**
+         if (ingredient.getRecipe() != null) {
+         ingredientCommand.setRecipe(conversionService.convert(ingredient.getRecipe(), RecipeCommand.class));
+         }*/
 
         return ingredientCommand;
     }
@@ -86,10 +89,10 @@ public class IngredientConverter implements GenericConverter {
         if (ingredientCommand.getUom() != null) {
             ingredient.setUom(conversionService.convert(ingredientCommand.getUom(), UnitOfMeasure.class));
         }
-
-        if (ingredientCommand.getRecipe() != null) {
-            ingredient.setRecipe(conversionService.convert(ingredientCommand.getRecipe(), Recipe.class));
-        }
+        /**
+         if (ingredientCommand.getRecipe() != null) {
+         ingredient.setRecipe(conversionService.convert(ingredientCommand.getRecipe(), Recipe.class));
+         }*/
 
         return ingredient;
     }

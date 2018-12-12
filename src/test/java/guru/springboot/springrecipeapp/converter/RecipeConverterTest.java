@@ -3,9 +3,11 @@ package guru.springboot.springrecipeapp.converter;
 import guru.springboot.springrecipeapp.RecipeAppConfig;
 import guru.springboot.springrecipeapp.commands.CategoryCommand;
 import guru.springboot.springrecipeapp.commands.IngredientCommand;
+import guru.springboot.springrecipeapp.commands.NotesCommand;
 import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Category;
 import guru.springboot.springrecipeapp.domain.Ingredient;
+import guru.springboot.springrecipeapp.domain.Notes;
 import guru.springboot.springrecipeapp.domain.Recipe;
 import guru.springboot.springrecipeapp.enums.Difficulity;
 import org.junit.Before;
@@ -61,6 +63,12 @@ public class RecipeConverterTest {
         ingredientCommands.add(ingredientCommand);
         recipeCommand.setIngredients(ingredientCommands);
 
+        NotesCommand notesCommand = new NotesCommand();
+        notesCommand.setId(1L);
+        notesCommand.setRecipeNotes("Test Recipe Notes");
+
+        recipeCommand.setNotes(notesCommand);
+
         Recipe recipe =  (Recipe) recipeConverter.convert(recipeCommand, TypeDescriptor.valueOf(RecipeCommand.class),
                 TypeDescriptor.valueOf(Recipe.class));
 
@@ -96,6 +104,12 @@ public class RecipeConverterTest {
         Set<Ingredient> ingredients = new HashSet<>();
         ingredients.add(ingredient);
         recipe.setIngredients(ingredients);
+
+        Notes notes = new Notes();
+        notes.setId(1L);
+        notes.setRecipeNotes("Test Recipe Notes");
+
+        recipe.setNotes(notes);
 
         RecipeCommand recipeCommand =  (RecipeCommand) recipeConverter.convert(recipe, TypeDescriptor.valueOf(Recipe.class),
                 TypeDescriptor.valueOf(RecipeCommand.class));

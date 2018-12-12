@@ -2,7 +2,9 @@ package guru.springboot.springrecipeapp.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DifficulityConverter implements ConverterFactory<String, Enum> {
 
     @Override
