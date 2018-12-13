@@ -124,8 +124,8 @@ public class RecipeConverter implements GenericConverter {
 
             Set<CategoryCommand> categorieCommands = new HashSet<>();
 
-            if (recipeCommand.getCategories() != null && !recipeCommand.getCategories().isEmpty()) {
-                recipeCommand.getCategories().forEach(category -> {
+            if (recipe.getCategories() != null && !recipe.getCategories().isEmpty()) {
+                recipe.getCategories().forEach(category -> {
                     categorieCommands.add(conversionService.convert(category, CategoryCommand.class));
                 });
             }
@@ -136,8 +136,8 @@ public class RecipeConverter implements GenericConverter {
             recipeCommand.setServings(recipe.getServings());
 
             Set<IngredientCommand> ingredientCommands = new HashSet<>();
-            if (recipeCommand.getIngredients() != null) {
-                recipeCommand.getIngredients().forEach(ingredient -> {
+            if (recipe.getIngredients() != null) {
+                recipe.getIngredients().forEach(ingredient -> {
                     ingredientCommands.add(conversionService.convert(ingredient, IngredientCommand.class));
                 });
             }
