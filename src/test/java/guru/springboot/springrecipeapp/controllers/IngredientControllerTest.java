@@ -135,4 +135,35 @@ public class IngredientControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/1/view-ingredients/1/view"));
     }
+
+
+    @Test
+    public void newIngredient() throws Exception {
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(1L);
+        ingredientCommand.setRecipe(recipeCommand);
+
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+
+        UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
+        unitOfMeasureCommand.setId(1L);
+
+        Set<UnitOfMeasureCommand> unitOfMeasureCommands = new HashSet<>();
+        unitOfMeasureCommands.add(unitOfMeasureCommand);
+
+        when(unitOfMeasureService.findAll()).thenReturn(unitOfMeasureCommands);
+
+        assertFalse(unitOfMeasureService.findAll().isEmpty());
+
+        mockMvc.perform(get("/recipe/1/new-ingredient/new"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("ingredient"))
+                .andExpect(model().attributeExists("uomList"))
+                .andExpect(view().name("/ingredients/update-ingredient"));
+
+    }
 }

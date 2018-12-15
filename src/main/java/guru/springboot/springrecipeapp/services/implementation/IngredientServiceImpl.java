@@ -69,6 +69,8 @@ public class IngredientServiceImpl implements IngredientService {
         }
 
         ingredient.setId(command.getId());
+        ingredient.setRecipe(recipe.get());
+        ingredient.setQuantity(command.getQuantity());
         if(command.getUom() != null){
             ingredient.setUom(conversionService.convert(command.getUom(), UnitOfMeasure.class));
         }
@@ -76,9 +78,18 @@ public class IngredientServiceImpl implements IngredientService {
 
         Recipe savedRecipe = recipeRepository.save(recipe.get());
 
-        IngredientCommand ingredientCommand = conversionService.convert(savedRecipe.getIngredients().stream()
-                .filter(savedIngredient -> savedIngredient.getId().equals(command.getId())).findFirst().get(), IngredientCommand.class);
-
+        IngredientCommand ingredientCommand= null;
+        if (ingredientOptional.isPresent() && command.getId() != null) {
+            ingredientCommand = conversionService.convert(savedRecipe.getIngredients().stream()
+                    .filter(savedIngredient -> savedIngredient.getId().equals(command.getId())).findFirst().get(), IngredientCommand.class);
+        }else{
+            ingredientCommand = conversionService.convert(savedRecipe.getIngredients().stream()
+                    .filter(savedIngredient ->
+                        savedIngredient.getDescription().equalsIgnoreCase(command.getDescription()) &&
+                        savedIngredient.getQuantity().equals(command.getQuantity()) &&
+                        savedIngredient.getUom().getId().equals(command.getUom().getId())
+                    ).findFirst().get(), IngredientCommand.class);
+        }
         ingredientCommand.setRecipe(conversionService.convert(savedRecipe, RecipeCommand.class));
 
         return ingredientCommand;

@@ -82,4 +82,22 @@ public class IngredientController {
 
         return "redirect:/recipe/" + savedRecipeId + "/view-ingredients/" + ingredientId + "/view";
     }
+
+    @GetMapping("/{recipeId}/new-ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model theModel ){
+
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipe(recipeCommand);
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+
+        theModel.addAttribute("ingredient", ingredientCommand);
+
+        Set<UnitOfMeasureCommand>  unitOfMeasureCommands= unitOfMeasureService.findAll();
+
+        theModel.addAttribute("uomList",unitOfMeasureCommands );
+
+        return "/ingredients/update-ingredient";
+    }
 }
