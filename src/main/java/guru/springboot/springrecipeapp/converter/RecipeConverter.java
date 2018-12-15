@@ -70,8 +70,8 @@ public class RecipeConverter implements GenericConverter {
 
         recipe.setId(recipeCommand.getId());
         recipe.setDescription(recipeCommand.getDescription());
-        if (recipe.getDifficulity() != null) {
-            recipe.setDifficulity(conversionService.convert(recipe.getDifficulity(), Difficulity.class));
+        if (recipeCommand.getDifficulity() != null) {
+            recipe.setDifficulity(conversionService.convert(recipeCommand.getDifficulity(), Difficulity.class));
         }
         recipe.setCookTime(recipeCommand.getCookTime());
         recipe.setDirections(recipeCommand.getDirections());
