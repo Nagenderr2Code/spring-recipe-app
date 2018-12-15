@@ -1,6 +1,7 @@
 package guru.springboot.springrecipeapp.services.implementation;
 
 import guru.springboot.springrecipeapp.commands.IngredientCommand;
+import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Ingredient;
 import guru.springboot.springrecipeapp.domain.Recipe;
 import guru.springboot.springrecipeapp.repositories.RecipeRepository;
@@ -67,5 +68,44 @@ public class IngredientServiceTest {
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(conversionService, times(1)).convert(ingredient, IngredientCommand.class);
 
+    }
+
+    @Test
+    public void saveIngredientCommand(){
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(1L);
+        ingredientCommand.setRecipe(recipeCommand);
+
+
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(1L);
+
+        Set<Ingredient> ingredients = new HashSet<>();
+        ingredients.add(ingredient);
+
+        recipe.setIngredients(ingredients);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+
+
+        Optional<Ingredient> ingredientOptional = Optional.of(ingredient);
+
+        when(recipeRepository.save(any())).thenReturn(recipe);
+
+        when(conversionService.convert(ingredient, IngredientCommand.class)).thenReturn(ingredientCommand);
+
+        IngredientCommand savedIngredientCommand =ingredientService.saveIngredientCommand(ingredientCommand);
+
+
+        assertEquals(ingredientCommand.getId(), savedIngredientCommand.getId());
     }
 }
