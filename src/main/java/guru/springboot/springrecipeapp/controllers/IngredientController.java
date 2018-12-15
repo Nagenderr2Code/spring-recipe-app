@@ -100,4 +100,10 @@ public class IngredientController {
 
         return "/ingredients/update-ingredient";
     }
+
+    @GetMapping("/{recipeId}/delete-ingredient/{ingredientId}/delete")
+    public String deleteRecipe(@PathVariable String recipeId, @PathVariable String ingredientId){
+        ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(ingredientId));
+        return "redirect:/recipe/" + recipeId + "/ingredients";
+    }
 }
