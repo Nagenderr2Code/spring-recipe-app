@@ -23,7 +23,7 @@ public class RecipeCommand {
     private Set<CategoryCommand> categories;
     private Difficulity difficulity;
     private Set<IngredientCommand> ingredients;
-    private Byte[] image;
+    private byte[] image;
     private NotesCommand notes;
 
 }

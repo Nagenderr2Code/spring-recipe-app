@@ -89,7 +89,7 @@ public class RecipeConverter implements GenericConverter {
         recipe.setCategories(categories);
 
         recipe.setPrepTime(recipeCommand.getPrepTime());
-        recipe.setImage(recipeCommand.getImage());
+        recipe.setImage(conversionService.convert(recipeCommand.getImage(), Byte[].class));
         recipe.setServings(recipeCommand.getServings());
 
         Set<Ingredient> ingredients = new HashSet<>();
@@ -132,7 +132,7 @@ public class RecipeConverter implements GenericConverter {
             recipeCommand.setCategories(categorieCommands);
 
             recipeCommand.setPrepTime(recipe.getPrepTime());
-            recipeCommand.setImage(recipe.getImage());
+            recipeCommand.setImage(conversionService.convert(recipe.getImage(), byte[].class));
             recipeCommand.setServings(recipe.getServings());
 
             Set<IngredientCommand> ingredientCommands = new HashSet<>();
