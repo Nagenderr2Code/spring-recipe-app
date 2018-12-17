@@ -51,7 +51,7 @@ public class RecipesController {
     public String saveOrupdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult theResult) {
 
         if(theResult.hasErrors()){
-            return "redirect:/recipe/update-recipe";
+            return "/recipe/update-recipe";
         }
         RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/view-recipe";
