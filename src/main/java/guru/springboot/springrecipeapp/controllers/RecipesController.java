@@ -4,9 +4,11 @@ import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Recipe;
 import guru.springboot.springrecipeapp.exceptions.NotFoundException;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/recipe")
@@ -51,5 +53,15 @@ public class RecipesController {
     public String deleteRecipe(@PathVariable String id){
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleException(){
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        modelAndView.setViewName("404error");
+
+        return modelAndView;
     }
 }
