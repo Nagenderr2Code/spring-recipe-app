@@ -2,6 +2,7 @@ package guru.springboot.springrecipeapp.controllers;
 
 import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Recipe;
+import guru.springboot.springrecipeapp.exceptions.NotFoundException;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/recipe")
-public class ViewRecipesController {
+public class RecipesController {
 
     private RecipeService recipeService;
 
-    public ViewRecipesController(RecipeService recipeService) {
+    public RecipesController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 
@@ -32,6 +33,9 @@ public class ViewRecipesController {
 
         RecipeCommand recipeCommand = recipeService.findCommandById(new Long(id));
 
+        if(recipeCommand == null){
+            throw new NotFoundException("Recipe Response is null.." + id);
+        }
         theModel.addAttribute("recipe", recipeCommand);
 
         return "/recipe/update-recipe";

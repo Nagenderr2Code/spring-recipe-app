@@ -2,6 +2,7 @@ package guru.springboot.springrecipeapp.services.implementation;
 
 import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Recipe;
+import guru.springboot.springrecipeapp.exceptions.NotFoundException;
 import guru.springboot.springrecipeapp.repositories.RecipeRepository;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
 import org.junit.Before;
@@ -115,5 +116,16 @@ public class RecipeServiceImplTest {
 
         verify(recipeRepository, times(1)).save(any());
 
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void exceptionTest(){
+
+        Optional<Recipe> recipe= Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipe);
+
+        recipeService.findById(anyLong());
+        recipeService.findCommandById(anyLong());
     }
 }

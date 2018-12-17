@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Slf4j
-public class ViewRecipesControllerTest {
+public class RecipesControllerTest {
 
     @Mock
     RecipeService recipeService;
@@ -32,7 +32,7 @@ public class ViewRecipesControllerTest {
     Model model;
 
     @InjectMocks
-    ViewRecipesController viewRecipesController;
+    RecipesController viewRecipesController;
 
     private final Long id = 1L;
 
@@ -103,5 +103,17 @@ public class ViewRecipesControllerTest {
         mockMvc.perform(get("/recipe/1/delete-recipe"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
+    }
+
+
+    @Test
+    public void exceptionRecipeUpdateTest() throws Exception {
+
+        RecipeCommand recipeCommand = null;
+
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+
+        mockMvc.perform(get("/recipe/1/update-recipe"))
+                .andExpect(status().is4xxClientError());
     }
 }

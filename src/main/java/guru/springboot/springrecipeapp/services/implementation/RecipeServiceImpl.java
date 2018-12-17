@@ -2,6 +2,7 @@ package guru.springboot.springrecipeapp.services.implementation;
 
 import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Recipe;
+import guru.springboot.springrecipeapp.exceptions.NotFoundException;
 import guru.springboot.springrecipeapp.repositories.RecipeRepository;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
 import org.springframework.core.convert.ConversionService;
@@ -37,7 +38,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipe = recipeRepository.findById(id);
 
         if (!recipe.isPresent()) {
-            throw new RuntimeException("Recipe Not Found for the Id.." + id);
+            throw new NotFoundException("Recipe not found with ID.." + id);
         }
 
         return recipe.get();
@@ -59,7 +60,8 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = recipeRepository.findById(id).get();
 
         if (recipe == null) {
-            throw new RuntimeException("Recipe not found with ID.." + id);
+            throw new NotFoundException("Recipe not found with ID.." + id);
+            //throw new RuntimeException("Recipe not found with ID.." + id);
         }
         return conversionService.convert(recipe, RecipeCommand.class);
     }
