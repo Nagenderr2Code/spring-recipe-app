@@ -2,10 +2,10 @@ package guru.springboot.springrecipeapp.controllers;
 
 import guru.springboot.springrecipeapp.commands.RecipeCommand;
 import guru.springboot.springrecipeapp.domain.Recipe;
+import guru.springboot.springrecipeapp.exceptions.RecipeExceptionHandler;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,7 +41,8 @@ public class RecipesControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(viewRecipesController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(viewRecipesController)
+                .setControllerAdvice(RecipeExceptionHandler.class).build();
     }
 
     @Test
@@ -119,7 +120,6 @@ public class RecipesControllerTest {
     }
 
     @Test
-    @Ignore
     public void exceptionRecipe400Test() throws Exception {
 
         mockMvc.perform(get("/recipe/qwqwq/update-recipe"))
