@@ -90,7 +90,11 @@ public class RecipesControllerTest {
         mockMvc.perform(post("/recipe/save-recipe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
-                .param("description", "some String"))
+                .param("description", "some String")
+                .param("prepTime", "1")
+                .param("cookTime", "1")
+                .param("servings", "1"))
+
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/1/view-recipe"));
     }

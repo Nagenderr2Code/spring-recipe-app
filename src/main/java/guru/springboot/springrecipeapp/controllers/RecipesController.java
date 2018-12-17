@@ -7,7 +7,10 @@ import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Slf4j
@@ -45,7 +48,11 @@ public class RecipesController {
     }
 
     @PostMapping("/save-recipe")
-    public String saveOrupdate(@ModelAttribute RecipeCommand recipeCommand) {
+    public String saveOrupdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult theResult) {
+
+        if(theResult.hasErrors()){
+            return "redirect:/recipe/update-recipe";
+        }
         RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/view-recipe";
     }
