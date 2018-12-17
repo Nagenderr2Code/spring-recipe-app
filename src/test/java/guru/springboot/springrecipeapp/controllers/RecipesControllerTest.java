@@ -5,6 +5,7 @@ import guru.springboot.springrecipeapp.domain.Recipe;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -107,7 +108,7 @@ public class RecipesControllerTest {
 
 
     @Test
-    public void exceptionRecipeUpdateTest() throws Exception {
+    public void exceptionRecipe404Test() throws Exception {
 
         RecipeCommand recipeCommand = null;
 
@@ -115,5 +116,13 @@ public class RecipesControllerTest {
 
         mockMvc.perform(get("/recipe/1/update-recipe"))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    @Ignore
+    public void exceptionRecipe400Test() throws Exception {
+
+        mockMvc.perform(get("/recipe/qwqwq/update-recipe"))
+                .andExpect(status().isBadRequest());
     }
 }

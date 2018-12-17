@@ -5,11 +5,9 @@ import guru.springboot.springrecipeapp.domain.Recipe;
 import guru.springboot.springrecipeapp.exceptions.NotFoundException;
 import guru.springboot.springrecipeapp.services.interfaces.RecipeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Slf4j
@@ -34,7 +32,7 @@ public class RecipesController {
     }
 
     @GetMapping("/{id}/update-recipe")
-    public String updateRecipe(@PathVariable String id, Model theModel) {
+    public String updateRecipe(@PathVariable String id, Model theModel) throws Exception {
 
         RecipeCommand recipeCommand = recipeService.findCommandById(new Long(id));
 
@@ -58,14 +56,4 @@ public class RecipesController {
         return "redirect:/";
     }
 
-    @ExceptionHandler
-    public ModelAndView handleException(NotFoundException exception) {
-
-        log.error("Exception Occured.." + exception.getMessage());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setStatus(HttpStatus.NOT_FOUND);
-        modelAndView.setViewName("404error");
-        modelAndView.addObject("exception", exception);
-        return modelAndView;
-    }
 }
