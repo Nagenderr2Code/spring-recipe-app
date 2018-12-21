@@ -24,7 +24,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/recipe/*/view-recipe").permitAll()
+                .antMatchers("/recipe/*/update-recipe").hasAnyRole("COOK", "MANAGER")
+                .antMatchers("/recipe/*/delete-recipe").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")

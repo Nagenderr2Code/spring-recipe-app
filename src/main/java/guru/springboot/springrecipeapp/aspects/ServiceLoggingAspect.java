@@ -21,9 +21,7 @@ public class ServiceLoggingAspect {
     public void serviceLogging(JoinPoint joinPoint, Object result){
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        joinPoint.getArgs();
-        joinPoint.getTarget();
-        log.info("Aspect Logging For Service" + methodSignature.getName() + result.toString());
+        log.info("Aspect Logging For Service" + methodSignature.getName());
     }
 
     @AfterThrowing(pointcut = "guru.springboot.springrecipeapp.aspects.PointCutDeclaration.serviceLogging()", throwing = "ex")
