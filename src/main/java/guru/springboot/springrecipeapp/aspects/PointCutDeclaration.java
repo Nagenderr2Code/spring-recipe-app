@@ -6,9 +6,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class PointCutDeclaration {
 
+
+    // Converter Point cut Declaration
     @Pointcut("execution(* guru.springboot.springrecipeapp.converter.*.*(..))")
     public void converterLogging(){}
 
+    // Controller Point cut Declaration
     @Pointcut("execution(* guru.springboot.springrecipeapp.controllers.*.*(..))")
     public void controllerMethods(){}
 
@@ -23,4 +26,8 @@ public class PointCutDeclaration {
 
     @Pointcut("(controllerMethods())&& (getMapping() || postMapping() || requestMapping())")
     public void controllerMappings(){}
+
+    // Service Point cut Declaration
+    @Pointcut("execution(* guru.springboot.springrecipeapp.services.implementation.*.*(..))")
+    public void serviceLogging(){}
 }

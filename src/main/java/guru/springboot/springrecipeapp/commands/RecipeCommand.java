@@ -4,6 +4,7 @@ import guru.springboot.springrecipeapp.enums.Difficulity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.*;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class RecipeCommand {
 
