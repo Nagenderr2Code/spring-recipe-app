@@ -44,7 +44,8 @@ public class CategoryConverter implements GenericConverter {
         if (source instanceof Category) {
             log.info("Converting the from category to categoryCommand..");
             Category category = (Category) source;
-            return convertToCategoryCommand(category);
+            CategoryCommand categoryCommand= convertToCategoryCommand(category);
+            return categoryCommand;
         } else if (source instanceof CategoryCommand) {
             log.info("Converting the from categoryCommand to category..");
             CategoryCommand categoryCommand = (CategoryCommand) source;
@@ -56,7 +57,7 @@ public class CategoryConverter implements GenericConverter {
         }
     }
 
-    private CategoryCommand convertToCategoryCommand(Category category) {
+    public CategoryCommand convertToCategoryCommand(Category category) {
         final CategoryCommand categoryCommand = new CategoryCommand();
         categoryCommand.setId(category.getId());
         categoryCommand.setDescription(category.getDescription());
@@ -72,7 +73,7 @@ public class CategoryConverter implements GenericConverter {
         return categoryCommand;
     }
 
-    private Category convertToCategory(CategoryCommand categoryCommand) {
+    public Category convertToCategory(CategoryCommand categoryCommand) {
         final Category category = new Category();
         category.setId(categoryCommand.getId());
         category.setDescription(categoryCommand.getDescription());

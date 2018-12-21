@@ -8,7 +8,6 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 
 @Configuration
-
 public class RecipeAppConfig{
 
 

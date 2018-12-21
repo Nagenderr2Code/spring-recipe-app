@@ -8,6 +8,8 @@ import guru.springboot.springrecipeapp.domain.Recipe;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.support.DefaultConversionService;
@@ -21,16 +23,18 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @Import(RecipeAppConfig.class)
+@SpringBootTest
 public class CategoryConverterTest {
 
-    //@Autowired
+   // @Autowired
     DefaultConversionService conversionService;
 
+    @Autowired
     CategoryConverter categoryConverter;
 
     @Before
     public void setUp() throws Exception {
-        categoryConverter = new CategoryConverter(conversionService);
+      // categoryConverter = new CategoryConverter(conversionService);
     }
 
     @Test
